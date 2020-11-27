@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import co.com.ceiba.mobile.pruebadeingreso.models.users_model.UserData;
@@ -36,21 +37,21 @@ public class User_Info_DB {
 
     //to insert values about user info
     public static void insertUserData(ArrayList<UserData> userData){
-
         db = DB_Manager.getInstance().openDatabase();
 
         ContentValues values = new ContentValues();
-
-        for (UserData user: userData) {
-            values.put(id,              user.getId());
-            values.put(name,            user.getName());
-            values.put(userNickName,    user.getUserName());
-            values.put(email,           user.getEmail());
-            values.put(phone,           user.getPhone());
-
-            Log.d("TAG", "insertUserData: "+user.getId());
-            db.insert(NAME_TABLE_USER_INFO, null, values);
+        try{
+            for (UserData user: userData) {
+                values.put(id, user.getId());
+                values.put(name, user.getName());
+                values.put(userNickName, user.getUserName());
+                values.put(email, user.getEmail());
+                values.put(phone, user.getPhone());
+                db.insert(NAME_TABLE_USER_INFO, null, values);
         }
+        }catch(Exception e){
+            e.printStackTrace();
+            }
 
         DB_Manager.getInstance().closeDatabase();
 

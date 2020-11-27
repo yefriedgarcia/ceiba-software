@@ -14,6 +14,10 @@ public class DB_Handler extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "CeibaDB";
 
+
+    public DB_Handler(Context context){
+        super(context, DB_NAME, null, DB_VERSION);
+    }
     public DB_Handler(){
        super(MainActivity.getContext(), DB_NAME, null, DB_VERSION);
     }
@@ -26,7 +30,7 @@ public class DB_Handler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + User_Info_DB.NAME_TABLE_USER_INFO);
-
         onCreate(db);
     }
+
 }

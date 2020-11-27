@@ -17,15 +17,9 @@ public class APIClient {
 
         if(apiRequests == null){
 
-            OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
-                    .build();
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .client(okHttpClient)
+                    .client(client())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -35,5 +29,14 @@ public class APIClient {
         }else{
             return apiRequests;
         }
+    }
+
+    public static OkHttpClient client(){
+
+        return new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
     }
 }

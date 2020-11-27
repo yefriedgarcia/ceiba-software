@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
     }
 
     //adapter for card User_Info
-    private void adapterUser(ArrayList<UserData> userData){
+    public void adapterUser(ArrayList<UserData> userData){
         userAdapter = new UserAdapter(getContext(), userData);
         usersRecycler.setAdapter(userAdapter);
         usersRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -94,19 +94,21 @@ public class MainActivity extends Activity {
     }
 
     //request user of database local
-    private void requestUsersDB(){
-        if( User_Info_DB.getUsers().size() > 0){
+    public boolean requestUsersDB(){
+        int size = User_Info_DB.getUsers().size();
+        if( size > 0 ){
             userDataList =  User_Info_DB.getUsers();
             adapterUser(userDataList);
+            return true;
         }else {
             requestUsersRest();
+            return false;
         }
     }
 
     //insert users in database local
-    private void insertUserDB(ArrayList<UserData> userData){
-        User_Info_DB.insertUserData(userData);
-
+    public void insertUserDB(ArrayList<UserData> userData){
+         User_Info_DB.insertUserData(userData);
     }
 
     //call web service of info users
@@ -127,7 +129,6 @@ public class MainActivity extends Activity {
                     dialog.dismiss();
                 }
             }
-
             @Override
             public void onFailure(Call<ArrayList<UserData>> call, Throwable t) {
                 messageToast(getResources().getString(R.string.generic_error));
